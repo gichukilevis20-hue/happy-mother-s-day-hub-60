@@ -1,7 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import bouquet from "@/assets/bouquet.jpg";
-import { Heart, Flower2, Sparkles } from "lucide-react";
+import { Heart, Flower2, Sparkles, Gift } from "lucide-react";
+import family1 from "@/assets/family-1.jpg";
+import family2 from "@/assets/family-2.jpg";
+import family3 from "@/assets/family-3.jpg";
+import family4 from "@/assets/family-4.jpg";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -17,6 +21,19 @@ function Index() {
   const [notes, setNotes] = useState(initialNotes);
   const [name, setName] = useState("");
   const [text, setText] = useState("");
+  const [opened, setOpened] = useState(false);
+
+  const gallery = [family1, family2, family3, family4];
+  // generate stable petal positions
+  const petals = Array.from({ length: 28 }).map((_, i) => ({
+    id: i,
+    left: Math.random() * 100,
+    delay: Math.random() * 0.6,
+    duration: 2 + Math.random() * 2,
+    rotate: Math.random() * 360,
+    size: 14 + Math.random() * 22,
+    emoji: ["🌸", "🌷", "🌹", "💮", "🌺", "❤️"][i % 6],
+  }));
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -137,6 +154,89 @@ function Index() {
               </p>
             </article>
           ))}
+        </div>
+      </section>
+
+      {/* Surprise gift from Levis */}
+      <section id="gift" className="mx-auto max-w-5xl px-6 pb-24">
+        <div className="text-center">
+          <h2 className="text-4xl md:text-5xl">A surprise for you, Mom</h2>
+          <p className="mt-3 text-muted-foreground">
+            From Levis, your first born — tap the gift.
+          </p>
+        </div>
+
+        <div className="relative mx-auto mt-12 flex max-w-3xl items-center justify-center">
+          {!opened ? (
+            <button
+              onClick={() => setOpened(true)}
+              className="group relative flex h-56 w-56 flex-col items-center justify-center rounded-3xl text-primary-foreground transition-transform hover:scale-105 active:scale-95"
+              style={{ background: "var(--gradient-hero)", boxShadow: "var(--shadow-petal)" }}
+              aria-label="Open surprise gift"
+            >
+              <div className="absolute inset-x-0 top-1/2 h-4 -translate-y-1/2" style={{ background: "var(--rose)" }} />
+              <div className="absolute inset-y-0 left-1/2 w-4 -translate-x-1/2" style={{ background: "var(--rose)" }} />
+              <div className="absolute left-1/2 top-2 -translate-x-1/2 text-3xl">🎀</div>
+              <Gift className="relative z-10 h-16 w-16 drop-shadow" />
+              <span className="relative z-10 mt-3 text-sm font-medium tracking-wide">Tap to open</span>
+            </button>
+          ) : (
+            <div className="relative w-full animate-in fade-in zoom-in-95 duration-700">
+              {/* petal explosion */}
+              <div className="pointer-events-none absolute inset-0 -top-10 overflow-visible">
+                {petals.map((p) => (
+                  <span
+                    key={p.id}
+                    className="absolute top-0 select-none"
+                    style={{
+                      left: `${p.left}%`,
+                      fontSize: `${p.size}px`,
+                      animation: `petal-fall ${p.duration}s ease-in ${p.delay}s forwards`,
+                      transform: `rotate(${p.rotate}deg)`,
+                    }}
+                  >
+                    {p.emoji}
+                  </span>
+                ))}
+              </div>
+
+              <div className="relative rounded-3xl border border-border bg-card/80 p-8 backdrop-blur"
+                style={{ boxShadow: "var(--shadow-petal)" }}>
+                <p className="text-center text-2xl md:text-3xl" style={{ fontFamily: "var(--font-display)", fontStyle: "italic" }}>
+                  "To a mother who never gives up on her children."
+                </p>
+                <p className="mt-3 text-center" style={{ fontFamily: "var(--font-script)", color: "var(--rose)", fontSize: "1.5rem" }}>
+                  — Levis, your first born child who is proud of you
+                </p>
+
+                <div className="mt-8 grid gap-4 sm:grid-cols-2">
+                  {gallery.map((src, i) => (
+                    <div
+                      key={i}
+                      className="overflow-hidden rounded-2xl border border-border bg-background animate-in fade-in slide-in-from-bottom-4"
+                      style={{ animationDelay: `${300 + i * 200}ms`, animationDuration: "700ms", animationFillMode: "both", boxShadow: "var(--shadow-soft)" }}
+                    >
+                      <img
+                        src={src}
+                        alt={`Family memory ${i + 1}`}
+                        loading="lazy"
+                        className="h-72 w-full object-cover transition-transform duration-500 hover:scale-105"
+                      />
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mt-8 text-center">
+                  <button
+                    onClick={() => setOpened(false)}
+                    className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-5 py-2 text-sm text-muted-foreground hover:bg-accent"
+                  >
+                    Close gift
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </section>
 

@@ -74,11 +74,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Happy Mother's Day — A Love Letter to Mom" },
       { name: "description", content: "A heartfelt Mother's Day tribute. Send love, leave a note, and celebrate the woman who made you who you are." },
-      { property: "og:title", content: "Happy Mother's Day" },
-      { property: "og:description", content: "A heartfelt tribute to moms everywhere." },
+      { property: "og:title", content: "Happy Mother's Day — A Love Letter to Mom" },
+      { property: "og:description", content: "A heartfelt Mother's Day tribute. Send love, leave a note, and celebrate the woman who made you who you are." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "Happy Mother's Day — A Love Letter to Mom" },
+      { name: "twitter:description", content: "A heartfelt Mother's Day tribute. Send love, leave a note, and celebrate the woman who made you who you are." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/56c88f4c-f750-435a-a45f-62dc7f4d1a16/id-preview-aa5af922--f0441bdc-3502-4ec4-8b77-bcc6852e3896.lovable.app-1778393101126.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/56c88f4c-f750-435a-a45f-62dc7f4d1a16/id-preview-aa5af922--f0441bdc-3502-4ec4-8b77-bcc6852e3896.lovable.app-1778393101126.png" },
     ],
     links: [
       {
